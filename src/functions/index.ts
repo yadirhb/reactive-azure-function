@@ -1,8 +1,7 @@
 import 'reflect-metadata';
 import { Container } from 'typedi';
 import * as appInsights from 'applicationinsights';
-import { httpRxControllerFactory } from "@shared/azure/functions/rxjs";
-import { MainController } from 'src/controllers';
+import { MainController } from '../controllers';
 
 appInsights
     .setup(process.env.APPLICATIONINSIGHTS_CONNECTION_STRING)
@@ -15,5 +14,5 @@ appInsights
     .setUseDiskRetryCaching(true)
     .start();
 
-// Register routes: index => main controller
-httpRxControllerFactory('index', Container.get(MainController), { methods: ['POST', 'GET'] });
+// Register MainController
+Container.get(MainController)
