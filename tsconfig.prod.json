@@ -8,6 +8,6 @@
     "**/*.spec.ts",
     "**/*.test.ts",
     "**/*mock*",
-    ".jest"
+    "*jest*"
   ]
 }

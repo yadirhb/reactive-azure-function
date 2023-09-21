@@ -1,5 +1,19 @@
+import 'reflect-metadata';
+import { Container } from 'typedi';
+import * as appInsights from 'applicationinsights';
 import { httpRxControllerFactory } from "@shared/azure/functions/rxjs";
-import * as controller from "../controllers";
+import { MainController } from 'src/controllers';
 
-httpRxControllerFactory('index', controller.index);
-httpRxControllerFactory('users', controller.users, { route: 'internal/users', methods: ['GET'] });
+appInsights
+    .setup(process.env.APPLICATIONINSIGHTS_CONNECTION_STRING)
+    .setAutoDependencyCorrelation(false)
+    .setAutoCollectRequests(false)
+    .setAutoCollectPerformance(false)
+    .setAutoCollectExceptions(false)
+    .setAutoCollectDependencies(false)
+    .setAutoCollectConsole(false)
+    .setUseDiskRetryCaching(true)
+    .start();
+
+// Register routes: index => main controller
+httpRxControllerFactory('index', Container.get(MainController), { methods: ['POST', 'GET'] });

@@ -8,7 +8,10 @@ export type HttpControllerOptions = Omit<HttpFunctionOptions, "handler">
 export type FunctionResult = HttpResponseInit | HttpResponse
 
 export type HttpRequestObservable = Observable<[HttpRequest, InvocationContext]>
-export type HttpRxController<T> = (stream$: HttpRequestObservable) => Observable<T>
+
+export interface RxHttpController<T extends FunctionResult = HttpResponseInit> {
+    onRequest: (stream$: HttpRequestObservable) => Observable<T>
+}
 
 const defaultOptions: HttpControllerOptions = {
     methods: ['GET', 'POST'],
@@ -17,12 +20,12 @@ const defaultOptions: HttpControllerOptions = {
 
 export function httpRxControllerFactory<T extends FunctionResult = HttpResponseInit>(
     name: string,
-    handler: HttpRxController<T>,
+    controller: RxHttpController<T>,
     options: HttpControllerOptions = defaultOptions
 ) {
     return app.http(name, {
         ...defaultOptions,
         ...options,
-        handler: async (request: HttpRequest, context: InvocationContext) => await firstValueFrom(handler(of([request, context])))
+        handler: async (request: HttpRequest, context: InvocationContext) => await firstValueFrom(controller.onRequest(of([request, context])))
     });
 }

@@ -1,7 +1,14 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "target": "es6",
+    "types": [
+      "jest",
+      "reflect-metadata"
+    ],
     "outDir": "dist",
     "rootDir": ".",
     "sourceMap": true,
@@ -17,12 +24,17 @@
         "src/test/*"
       ]
     },
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "plugins": [
+      {
+        "transform": "typia/lib/transform"
+      }
+    ]
   },
   "exclude": [
     "node_modules",
     "public_html",
     "**/coverage/**/*",
-    ".jest"
+    "*jest*"
   ]
 }
