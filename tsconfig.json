@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "outDir": "dist",
+    "rootDir": ".",
+    "sourceMap": true,
+    "strict": false,
+    "baseUrl": "./",
+    "paths": {
+      // This needs to be mirrored in babel.config.js
+      // Components is a directory with sub directories
+      "@shared/*": [
+        "src/shared/*"
+      ],
+      "@test/*": [
+        "src/test/*"
+      ]
+    },
+    "strictNullChecks": true
+  },
+  "exclude": [
+    "node_modules",
+    "public_html",
+    "**/coverage/**/*",
+    ".jest"
+  ]
+}
