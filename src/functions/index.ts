@@ -14,5 +14,9 @@ appInsights
     .setUseDiskRetryCaching(true)
     .start();
 
-// Register MainController
-Container.get(MainController)
+// Load Controllers
+[MainController].forEach((controller) => {
+    if (Container.has(controller)) {
+        console.log(`[INFO] Controller: '${controller.name}' successfully loaded.`)
+    }
+});
