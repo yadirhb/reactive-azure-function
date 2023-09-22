@@ -12,6 +12,7 @@ import { HttpResponseInit } from '@azure/functions';
 
 @Service()
 export class MainController {
+    timestamp: number = Date.now()
     constructor(@Inject() protected logger: DefaultLogger) { }
 
     // https://learn.microsoft.com/en-us/azure/azure-functions/functions-node-upgrade-v4?tabs=azure-cli-set-indexing-flag%2Cv4#httpresponse
